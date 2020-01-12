@@ -1,0 +1,20 @@
+package com.example.libnavannotation;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Target;
+
+/**
+ * author: created by wentaoKing
+ * date: created in 2020-01-12
+ * description:
+ */
+
+@Target(ElementType.TYPE)
+public @interface ActivityDestination {
+
+    String pageUrl();
+
+    boolean needLogin() default false;
+
+    boolean asStarter() default false;
+}
