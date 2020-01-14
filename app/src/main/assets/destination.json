@@ -1,1 +1,23 @@
-{}
+{
+  "main/tabs/dash": {
+    "asStarter": false,
+    "needLogin": false,
+    "pageUrl": "main/tabs/dash",
+    "className": "com.example.funnyjoke.ui.dashboard.DashboardFragment",
+    "id": 190082854
+  },
+  "main/tabs/home": {
+    "asStarter": true,
+    "needLogin": false,
+    "pageUrl": "main/tabs/home",
+    "className": "com.example.funnyjoke.ui.home.HomeFragment",
+    "id": 2127155002
+  },
+  "main/tabs/notification": {
+    "asStarter": false,
+    "needLogin": false,
+    "pageUrl": "main/tabs/notification",
+    "className": "com.example.funnyjoke.ui.notifications.NotificationsFragment",
+    "id": 591342030
+  }
+}

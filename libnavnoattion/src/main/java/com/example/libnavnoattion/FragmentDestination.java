@@ -6,7 +6,7 @@ import java.lang.annotation.Target;
 /**
  * author: created by wentaoKing
  * date: created in 2020-01-12
- * description:
+ * description: fragment类型页面信息
  */
 
 @Target(ElementType.TYPE)

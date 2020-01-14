@@ -34,7 +34,7 @@ import javax.tools.StandardLocation;
 /**
  * author: created by wentaoKing
  * date: created in 2020-01-12
- * description:
+ * description: 对自定义注解的相关操作：生成json文件
  */
 
 @AutoService(Processor.class)
@@ -63,14 +63,12 @@ public class NavProcessor extends AbstractProcessor {
         Set<? extends Element> fragmentElements = roundEnvironment.getElementsAnnotatedWith(FragmentDestination.class);
         Set<? extends Element> activityElements = roundEnvironment.getElementsAnnotatedWith(ActivityDestination.class);
 
-
         if (!fragmentElements.isEmpty() || !activityElements.isEmpty()) {
             HashMap<String, JSONObject> destMap = new HashMap<>();
             handleDestination(fragmentElements, FragmentDestination.class, destMap);
             handleDestination(activityElements, ActivityDestination.class, destMap);
 
             //保存json文件到 src/main/assets目录下
-
             FileObject resource = null;
             try {
                 resource = filer.createResource(StandardLocation.CLASS_OUTPUT, "", OUTPUT_FILE_NAME);
@@ -78,9 +76,8 @@ public class NavProcessor extends AbstractProcessor {
                 e.printStackTrace();
             }
             String resourcePath = resource.toUri().getPath();
-
             messager.printMessage(Diagnostic.Kind.NOTE,"resourcePath " + resourcePath);
-
+            //获取app目录的路径
             String appPath = resourcePath.substring(0, resourcePath.indexOf("app") + 4);
             String assetPath = appPath + "src/main/assets/";
 
@@ -129,6 +126,12 @@ public class NavProcessor extends AbstractProcessor {
         return true;
     }
 
+    /**
+     * 处理目的行为
+     * @param elements
+     * @param annotationClass 注解的类
+     * @param destMap
+     */
     private void handleDestination(Set<? extends Element> elements,
                                    Class<? extends Annotation> annotationClass, HashMap<String, JSONObject> destMap) {
         for (Element element : elements) {
@@ -143,6 +146,8 @@ public class NavProcessor extends AbstractProcessor {
             boolean isFragment = false;
 
             Annotation annotation = typeElement.getAnnotation(annotationClass);
+
+
             if (annotation instanceof FragmentDestination) {
 
                 isFragment = true;
@@ -168,6 +173,7 @@ public class NavProcessor extends AbstractProcessor {
                 jsonObject.put("pageUrl", pageUrl);
                 jsonObject.put("asStarter", asStarter);
                 jsonObject.put("className", className);
+                destMap.put(pageUrl,jsonObject);
             }
         }
     }
