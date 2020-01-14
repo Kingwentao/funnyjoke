@@ -1,2 +1,2 @@
-include ':app', ':libnavcompiler', ':libnavnoattion'
+include ':app', ':libnavcompiler', ':libnavannotation'
 rootProject.name='funnyjoke'
