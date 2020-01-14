@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.funnyjoke.R
-import com.example.libnavannotation.FragmentDestination
+import com.example.libnavnoattion.FragmentDestination
 
 
 @FragmentDestination(pageUrl = "main/tabs/dash",asStarter = false)

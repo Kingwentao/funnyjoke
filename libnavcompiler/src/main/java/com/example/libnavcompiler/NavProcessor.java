@@ -2,9 +2,10 @@ package com.example.libnavcompiler;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.example.libnavannotation.ActivityDestination;
-import com.example.libnavannotation.FragmentDestination;
+import com.example.libnavnoattion.ActivityDestination;
+import com.example.libnavnoattion.FragmentDestination;
 import com.google.auto.service.AutoService;
+
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -39,8 +40,8 @@ import javax.tools.StandardLocation;
 @AutoService(Processor.class)
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 @SupportedAnnotationTypes(
-        {"com.example.libnavannotation.FragmentDestination",
-                "com.example.libnavannotation.ActivityDestination"})
+        {"com.example.libnavnoattion.FragmentDestination",
+                "com.example.libnavnoattion.ActivityDestination"})
 public class NavProcessor extends AbstractProcessor {
 
     private static final String OUTPUT_FILE_NAME = "destination.json";

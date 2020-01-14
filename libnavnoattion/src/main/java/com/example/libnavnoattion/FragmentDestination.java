@@ -1,4 +1,4 @@
-package com.example.libnavannotation;
+package com.example.libnavnoattion;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Target;
