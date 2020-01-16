@@ -147,9 +147,7 @@ public class NavProcessor extends AbstractProcessor {
 
             Annotation annotation = typeElement.getAnnotation(annotationClass);
 
-
             if (annotation instanceof FragmentDestination) {
-
                 isFragment = true;
 
                 FragmentDestination dest = (FragmentDestination) annotation;
@@ -173,6 +171,7 @@ public class NavProcessor extends AbstractProcessor {
                 jsonObject.put("pageUrl", pageUrl);
                 jsonObject.put("asStarter", asStarter);
                 jsonObject.put("className", className);
+                jsonObject.put("isFragment",isFragment);
                 destMap.put(pageUrl,jsonObject);
             }
         }

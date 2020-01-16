@@ -1,5 +1,6 @@
 {
   "main/tabs/dash": {
+    "isFragment": true,
     "asStarter": false,
     "needLogin": false,
     "pageUrl": "main/tabs/dash",
@@ -7,6 +8,7 @@
     "id": 190082854
   },
   "main/tabs/home": {
+    "isFragment": true,
     "asStarter": true,
     "needLogin": false,
     "pageUrl": "main/tabs/home",
@@ -14,6 +16,7 @@
     "id": 2127155002
   },
   "main/tabs/notification": {
+    "isFragment": true,
     "asStarter": false,
     "needLogin": false,
     "pageUrl": "main/tabs/notification",
