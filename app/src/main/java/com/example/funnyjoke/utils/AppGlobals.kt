@@ -29,6 +29,5 @@ class AppGlobals {
             }
             return sApplication!!
         }
-
     }
 }

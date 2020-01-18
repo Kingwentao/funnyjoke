@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-       NavGraphBuilder.build(navController)
+        //
+        NavGraphBuilder.build(navController)
     }
 }
