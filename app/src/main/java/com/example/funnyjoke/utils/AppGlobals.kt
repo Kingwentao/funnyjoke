@@ -15,7 +15,7 @@ class AppGlobals {
 
         private var sApplication: Application? = null
 
-        @SuppressLint("DiscouragedPrivateApi", "PrivateApi")
+
         fun getApplication():Application{
             if (sApplication == null){
                 //通过反射获取application对象

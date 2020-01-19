@@ -1,5 +1,6 @@
 package com.example.funnyjoke.model
 
+
 data class Tab(
     val enable: Boolean,
     val index: Int,
