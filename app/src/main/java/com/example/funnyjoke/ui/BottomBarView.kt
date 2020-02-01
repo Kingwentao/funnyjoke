@@ -1,10 +1,12 @@
 package com.example.funnyjoke.ui
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.text.TextUtils
 import android.util.AttributeSet
+import android.util.Log
 import com.example.funnyjoke.R
 import com.example.funnyjoke.utils.AppConfig
 import com.google.android.material.bottomnavigation.*
@@ -12,13 +14,12 @@ import com.google.android.material.bottomnavigation.*
 /**
  * author: created by wentaoKing
  * date: created in 2020-01-18
- * description:
+ * description: 自定义底部导航栏view
  */
 class BottomBarView : BottomNavigationView {
 
     private val sIcons = arrayOf(R.drawable.icon_tab_home,R.drawable.icon_tab_sofa,
         R.drawable.icon_tab_publish,R.drawable.icon_tab_find,R.drawable.icon_tab_mine)
-
 
     constructor(context: Context): super(context){
         init()
@@ -32,7 +33,8 @@ class BottomBarView : BottomNavigationView {
         init()
     }
 
-    fun init() {
+    @SuppressLint("RestrictedApi")
+    private fun init() {
         val bottomBar = AppConfig.getBottomBar()
         val tabs = bottomBar.tabs
         val state = Array(2){IntArray(10)}
@@ -50,6 +52,7 @@ class BottomBarView : BottomNavigationView {
         for (tab in tabs){
             if (tab.enable){
                 val id = getTabId(tab.pageUrl)
+                Log.d("tempTest","id + $id")
                 if (id > 0){
                     //获取菜单item
                     val menuItem = menu.add(0,id,tab.index,tab.title)
@@ -65,7 +68,6 @@ class BottomBarView : BottomNavigationView {
             val itemView = menuView.getChildAt(tab.index) as BottomNavigationItemView
             val iconSize = dp2px(tab.size)
             itemView.setIconSize(iconSize)
-
             if(TextUtils.isEmpty(tab.title)){
                 itemView.setIconTintList(ColorStateList.valueOf(Color.parseColor(tab.tintColor)))
                 itemView.setShifting(false)
@@ -80,7 +82,7 @@ class BottomBarView : BottomNavigationView {
     private fun getTabId(pageUrl: String): Int{
         val destination = AppConfig.getDestConfig()[pageUrl]
         if (destination == null) {
-            return  -1
+            return -1
         } else {
             return destination.id
         }

@@ -1,4 +1,4 @@
-package com.example.funnyjoke.ui.notifications
+package com.example.funnyjoke.ui.my
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,23 +11,16 @@ import androidx.lifecycle.ViewModelProviders
 import com.example.funnyjoke.R
 import com.example.libnavnoattion.FragmentDestination
 
-@FragmentDestination(pageUrl = "main/tabs/find",asStarter = false)
-class NotificationsFragment : Fragment() {
-
-    private lateinit var notificationsViewModel: NotificationsViewModel
+@FragmentDestination(pageUrl = "main/tabs/my", asStarter = false)
+class MyFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-            ViewModelProviders.of(this).get(NotificationsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_notifications, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
-        notificationsViewModel.text.observe(this, Observer {
-            textView.text = it
-        })
         return root
     }
 }

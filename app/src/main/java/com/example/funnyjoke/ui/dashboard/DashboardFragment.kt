@@ -12,7 +12,7 @@ import com.example.funnyjoke.R
 import com.example.libnavnoattion.FragmentDestination
 
 
-@FragmentDestination(pageUrl = "main/tabs/dash",asStarter = false)
+@FragmentDestination(pageUrl = "main/tabs/publish", asStarter = false)
 class DashboardFragment : Fragment() {
 
     private lateinit var dashboardViewModel: DashboardViewModel

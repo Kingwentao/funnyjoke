@@ -13,6 +13,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.funnyjoke.utils.NavGraphBuilder
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -21,7 +22,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
         navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
@@ -32,13 +32,12 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        nav_view.setupWithNavController(navController)
 
-        //
         NavGraphBuilder.build(navController)
 
         //设置导航栏的选择监听
-        navView.setOnNavigationItemSelectedListener(this)
+        nav_view.setOnNavigationItemSelectedListener(this)
     }
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {

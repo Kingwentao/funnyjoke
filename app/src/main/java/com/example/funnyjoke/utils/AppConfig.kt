@@ -13,11 +13,13 @@ import java.lang.StringBuilder
 /**
  * author: created by wentaoKing
  * date: created in 2020-01-15
- * description:
+ * description: 应用配置
  */
 class AppConfig {
 
     companion object {
+
+        private const val TAG = "AppConfig"
 
         //由于全局存在，所以可以定义成静态
         private var sDestConfig: HashMap<String, Destination>? = null
@@ -49,7 +51,9 @@ class AppConfig {
          */
         private fun parseFile(name: String): String {
 
-            val assets = AppGlobals.getApplication().resources.assets
+            val application = AppGlobals.getApplication()
+            val assets = application.resources.assets
+
             var inputStream: InputStream? = null
             var bfReader: BufferedReader? = null
             val builder = StringBuilder()
@@ -69,7 +73,6 @@ class AppConfig {
                 inputStream?.close()
                 bfReader?.close()
             }
-
             return builder.toString()
         }
     }
