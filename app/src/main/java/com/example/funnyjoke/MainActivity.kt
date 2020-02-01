@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavActionBuilder
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -23,7 +24,6 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
@@ -31,11 +31,14 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
+
+        val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)!!
+
+        navController = NavHostFragment.findNavController(fragment)
+        NavGraphBuilder.build(navController, this, fragment.id)
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         nav_view.setupWithNavController(navController)
-
-        NavGraphBuilder.build(navController)
-
         //设置导航栏的选择监听
         nav_view.setOnNavigationItemSelectedListener(this)
     }

@@ -1,6 +1,8 @@
 package com.example.funnyjoke.utils
 
 import android.content.ComponentName
+import android.content.Context
+import androidx.fragment.app.FragmentActivity
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
@@ -16,9 +18,13 @@ class NavGraphBuilder {
 
     companion object{
 
-        fun build(navController: NavController){
+        fun build(navController: NavController,fragmentActivity: FragmentActivity,containerId: Int){
             val provider = navController.navigatorProvider
-            val fragmentNavigator = provider.getNavigator(FragmentNavigator::class.java)
+            //val fragmentNavigator = provider.getNavigator(FragmentNavigator::class.java)
+            //使用自定义的fragment navigator 实现显示和隐藏的方式
+            val fragmentNavigator = FixFragmentNavigator(fragmentActivity,fragmentActivity.supportFragmentManager,containerId)
+            provider.addNavigator(fragmentNavigator)
+
             val activityNavigator = provider.getNavigator(ActivityNavigator::class.java)
             val navGraph = NavGraph(NavGraphNavigator(provider))
             val destConfig = AppConfig.getDestConfig()
