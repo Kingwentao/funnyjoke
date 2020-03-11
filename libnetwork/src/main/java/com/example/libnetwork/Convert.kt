@@ -5,13 +5,10 @@ import java.lang.reflect.Type
 /**
  * author: created by wentaoKing
  * date: created in 2020-03-09
- * description:
+ * description: 转换器接口
  */
 interface Convert<T> {
 
-    fun convert(response: String,type: Type): Any?
-
-    fun convert(response: String,claz: Class<T>): Any?
-
+    fun convert(response: String,type: Type): T?
 
 }

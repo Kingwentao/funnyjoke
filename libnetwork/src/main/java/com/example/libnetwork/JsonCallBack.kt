@@ -7,15 +7,15 @@ package com.example.libnetwork
  */
 abstract class JsonCallBack<T> {
 
-    fun onSuccess(respone: ApiResponse<T>){
+    open fun onSuccess(respone: ApiResponse<T>){
 
     }
 
-    fun onError(respone: ApiResponse<T>){
+    open fun onError(respone: ApiResponse<T>){
 
     }
 
-    fun onCacheSuccess(respone: ApiResponse<T>){
+    open fun onCacheSuccess(respone: ApiResponse<T>){
 
     }
 

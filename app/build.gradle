@@ -47,6 +47,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation project(':libnavannotation')
     kapt project(':libnavcompiler')
+    implementation project(':libnetwork')
     implementation 'com.alibaba:fastjson:1.2.59'
     implementation 'com.google.code.gson:gson:2.8.6'
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"

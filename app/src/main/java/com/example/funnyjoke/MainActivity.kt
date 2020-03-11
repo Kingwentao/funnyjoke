@@ -14,7 +14,11 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.funnyjoke.utils.NavGraphBuilder
+import com.example.libnetwork.ApiResponse
+import com.example.libnetwork.GetRequest
+import com.example.libnetwork.JsonCallBack
 import kotlinx.android.synthetic.main.activity_main.*
+import org.json.JSONObject
 
 class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -41,6 +45,19 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         nav_view.setupWithNavController(navController)
         //设置导航栏的选择监听
         nav_view.setOnNavigationItemSelectedListener(this)
+
+
+        //测试
+        val request = GetRequest<JSONObject>("www.mooc.com")
+        request.execute()
+
+        request.execute(object : JsonCallBack<JSONObject>() {
+
+            override fun onSuccess(respone: ApiResponse<JSONObject>) {
+                super.onSuccess(respone)
+            }
+        })
+
     }
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {

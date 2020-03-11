@@ -1,26 +1,31 @@
 package com.example.libnetwork
 
+import android.util.Log
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
+import java.lang.Exception
 import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 
 /**
  * author: created by wentaoKing
  * date: created in 2020-03-02
  * description:
  */
-abstract class Request<T,R> {
+abstract class Request<T, R> {
 
-    private lateinit var mUrl: String
-    protected val headers = HashMap<String,String>()
-    protected val params = HashMap<String,Any>()
+    private var mType: Type ?= null
+    private var mUrl: String
+    protected val headers = HashMap<String, String>()
+    protected val params = HashMap<String, Any>()
 
-    private var cacheKey: String?=null
+    private var cacheKey: String? = null
 
-    companion object{
+    companion object {
+        private const val TAG = "Request"
         //仅仅只访问本地缓存，即便本地缓存不存在，也不会发起网络请求
         private const val CACHE_ONLY = 1
         //先访问缓存，同时发起网络的请求，成功后缓存到本地
@@ -32,49 +37,50 @@ abstract class Request<T,R> {
     }
 
 
-    constructor(url: String){
+    constructor(url: String) {
         this.mUrl = url
     }
 
-    fun addHeaders(key: String,value: String): R{
+    fun addHeaders(key: String, value: String): R {
         headers[key] = value
         return this as R
     }
 
-    fun addParams(key: String,value: Any?): R{
-        if (value == null){
+    fun addParams(key: String, value: Any?): R {
+        if (value == null) {
             return this as R
         }
 
         //int byte char short long double float boolean 和他们的包装类型，但是除了 String.class 所以要额外判断
 
         try {
-            if (value.javaClass == String::class.java){
+            if (value.javaClass == String::class.java) {
                 params[key] = value
-            }else{
+            } else {
                 val field = value.javaClass.getField("TYPE")
                 val claz = field.get(null) as Class<*>
-                if (claz.isPrimitive){
+                if (claz.isPrimitive) {
                     params[key] = value
                 }
             }
-        }catch (e: NoSuchFieldException) {
-            e.printStackTrace();
+        } catch (e: NoSuchFieldException) {
+            e.printStackTrace()
         } catch (e: IllegalAccessException) {
-            e.printStackTrace();
+            e.printStackTrace()
         }
 
         return this as R
     }
 
-    fun cacheKey(key: String): R{
+    fun cacheKey(key: String): R {
         this.cacheKey = key
         return this as R
     }
 
-    fun execute(jsonCallBack: JsonCallBack<T>){
+    fun execute(jsonCallBack: JsonCallBack<T>) {
 
-        getCall().enqueue( object : Callback{
+        getCall().enqueue(object : Callback {
+
             override fun onFailure(call: Call, e: IOException) {
 
                 val response = ApiResponse<T>()
@@ -83,10 +89,11 @@ abstract class Request<T,R> {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val apiResponse: ApiResponse<T> = parseResponse(response,jsonCallBack)
-                if (apiResponse.success!!){
+                val apiResponse: ApiResponse<T> = parseResponse(response, jsonCallBack)
+
+                if (apiResponse.success!!) {
                     jsonCallBack.onSuccess(apiResponse)
-                }else{
+                } else {
                     jsonCallBack.onError(apiResponse)
                 }
 
@@ -95,36 +102,53 @@ abstract class Request<T,R> {
         })
     }
 
-    private fun parseResponse(response: Response): ApiResponse<T> {
 
-
-
-    }
-
-
-    private fun parseResponse(response: Response,callBack: JsonCallBack<T>): ApiResponse<T> {
-        val message: String
+    private fun parseResponse(
+        response: Response,
+        callBack: JsonCallBack<T>? = null
+    ): ApiResponse<T> {
+        var message: String? = null
         val status = response.code
-        val success = response.isSuccessful
-        val apiResponse = ApiResponse<T>()
-        when(success){
+        var success = response.isSuccessful
+        val result = ApiResponse<T>()
+        val convert = ApiService.sConvert
+        try {
+            val content = response.body.toString()
+            when (success) {
+                true -> {
 
-            true -> {
-                val content = response.body.toString()
-                if (callBack != null){
-                    val type = callBack.javaClass.genericSuperclass as ParameterizedType
-                    val argument = type.actualTypeArguments[0]
-
+                    if (callBack != null) {
+                        val parameterizedType =
+                            callBack.javaClass.genericSuperclass as ParameterizedType
+                        val type = parameterizedType.actualTypeArguments[0]
+                        result.body = convert.convert(content, type) as T
+                    } else if (mType != null) {
+                        val type = mType!!
+                        result.body = convert.convert(content, type) as T
+                    } else {
+                        Log.e(TAG, "类型type为空，无法解析 ")
+                    }
+                }
+                false -> {
+                    message = content
                 }
             }
+        } catch (e: Exception) {
+            message = e.message.toString()
+            success = false
         }
+
+        result.success = success
+        result.message = message
+        result.status = status
+        return result
     }
 
-    fun execute(){
+    fun execute() {
 
     }
 
-    fun getCall(): Call{
+    fun getCall(): Call {
         val builder = Request.Builder()
         addHeaders(builder)
         val request: Request = generateRequest(builder)
@@ -135,8 +159,17 @@ abstract class Request<T,R> {
     abstract fun generateRequest(builder: Request.Builder): Request
 
     private fun addHeaders(builder: Request.Builder) {
-        for (entry in headers.entries){
-            builder.addHeader(entry.key,entry.value)
+        for (entry in headers.entries) {
+            builder.addHeader(entry.key, entry.value)
         }
     }
+
+    /**
+     * 对于jsonCallback为空的情况下，不能获取到泛型类型，所以必须手动传入
+     */
+    fun responseType(type: Type): R {
+        mType = type
+        return this as R
+    }
+
 }

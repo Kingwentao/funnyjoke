@@ -19,8 +19,11 @@ class ApiService {
 
     companion object {
 
+        private lateinit var sBaseUrl: String
         private const val TAG = "ApiService"
         var okHttpClient: OkHttpClient
+
+        lateinit var sConvert: Convert<Any>
 
         init {
 
@@ -67,6 +70,15 @@ class ApiService {
             }
 
         }
+
+        fun init(baseUrl: String,convert: Convert<Any>?=null){
+            sBaseUrl = baseUrl
+            if (convert == null){
+                sConvert = JsonConvert()
+            }
+            sConvert = convert!!
+        }
+
     }
 
 
