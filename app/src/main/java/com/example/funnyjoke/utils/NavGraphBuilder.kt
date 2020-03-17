@@ -1,13 +1,11 @@
 package com.example.funnyjoke.utils
 
 import android.content.ComponentName
-import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.ActivityNavigator
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
 import androidx.navigation.NavGraphNavigator
-import androidx.navigation.fragment.FragmentNavigator
 
 /**
  * author: created by wentaoKing
@@ -39,7 +37,8 @@ class NavGraphBuilder {
                     navGraph.addDestination(fgDestination)
                 }else{
                     val atDestination = activityNavigator.createDestination()
-                    atDestination.setComponentName(ComponentName(AppGlobals.getApplication().packageName
+                    atDestination.setComponentName(ComponentName(
+                        com.example.libcommon.AppGlobals.getApplication().packageName
                         ,destination.className))
                     atDestination.id = destination.id
                     atDestination.addDeepLink(destination.pageUrl)

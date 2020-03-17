@@ -51,7 +51,7 @@ class AppConfig {
          */
         private fun parseFile(name: String): String {
 
-            val application = AppGlobals.getApplication()
+            val application = com.example.libcommon.AppGlobals.getApplication()
             val assets = application.resources.assets
 
             var inputStream: InputStream? = null

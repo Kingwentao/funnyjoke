@@ -48,6 +48,7 @@ dependencies {
     implementation project(':libnavannotation')
     kapt project(':libnavcompiler')
     implementation project(':libnetwork')
+    implementation project(':libcommon')
     implementation 'com.alibaba:fastjson:1.2.59'
     implementation 'com.google.code.gson:gson:2.8.6'
     compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
