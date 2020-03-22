@@ -13,7 +13,7 @@ import com.example.libcommon.AppGlobals
  * description: 数据库缓存类
  */
 
-@Database(entities = {Cache::javaClass}, version = 1, exportSchema = true)
+@Database(entities = [Cache::class], version = 1, exportSchema = true)
 abstract class CacheDatabase : RoomDatabase() {
 
     companion object {
