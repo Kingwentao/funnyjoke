@@ -42,14 +42,15 @@ abstract class CacheDatabase : RoomDatabase() {
                 .addMigrations(sMigration)
                 .build()
 
-
-            fun get(): CacheDatabase {
-                return mDataBase
-            }
-
+        }
+        fun get(): CacheDatabase {
+            return mDataBase
         }
 
     }
+
+    abstract fun getCache(): CacheDao
+
 
 
 }
