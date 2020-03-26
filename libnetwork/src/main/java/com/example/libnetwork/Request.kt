@@ -1,23 +1,27 @@
 package com.example.libnetwork
 
+import android.annotation.SuppressLint
 import android.util.Log
 import okhttp3.Call
 import okhttp3.Callback
-import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 import java.lang.Exception
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
+import android.text.TextUtils
+import androidx.arch.core.executor.ArchTaskExecutor
+import com.example.libnetwork.cache.CacheManager
+
 
 /**
  * author: created by wentaoKing
  * date: created in 2020-03-02
  * description:
  */
-abstract class Request<T, R> {
+abstract class Request<T, R> : Cloneable{
 
-    private var mType: Type ?= null
+    private var mType: Type? = null
     private var mUrl: String
     protected val headers = HashMap<String, String>()
     protected val params = HashMap<String, Any>()
@@ -35,6 +39,8 @@ abstract class Request<T, R> {
         //先访问网络，成功后缓存到本地
         private const val NET_CACHE = 4
     }
+
+    private var mCacheStrategy = NET_ONLY
 
 
     constructor(url: String) {
@@ -77,29 +83,40 @@ abstract class Request<T, R> {
         return this as R
     }
 
+    @SuppressLint("RestrictedApi")
     fun execute(jsonCallBack: JsonCallBack<T>) {
 
-        getCall().enqueue(object : Callback {
-
-            override fun onFailure(call: Call, e: IOException) {
-
-                val response = ApiResponse<T>()
-                response.message = e.message
-                jsonCallBack.onError(response)
+        //加入缓存策略: 如果不只是通过网络
+        if(mCacheStrategy != NET_ONLY){
+            ArchTaskExecutor.getIOThreadExecutor().execute {
+                val response = readCache()
+                if (jsonCallBack != null && response?.body != null){
+                    jsonCallBack.onCacheSuccess(response)
+                }
             }
+        }
 
-            override fun onResponse(call: Call, response: Response) {
-                val apiResponse: ApiResponse<T> = parseResponse(response, jsonCallBack)
+        if (mCacheStrategy != CACHE_ONLY){
 
-                if (apiResponse.success!!) {
-                    jsonCallBack.onSuccess(apiResponse)
-                } else {
-                    jsonCallBack.onError(apiResponse)
+            getCall().enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+
+                    val response = ApiResponse<T>()
+                    response.message = e.message
+                    jsonCallBack.onError(response)
                 }
 
-            }
+                override fun onResponse(call: Call, response: Response) {
+                    val apiResponse: ApiResponse<T> = parseResponse(response, jsonCallBack)
 
-        })
+                    if (apiResponse.success!!) {
+                        jsonCallBack.onSuccess(apiResponse)
+                    } else {
+                        jsonCallBack.onError(apiResponse)
+                    }
+                }
+            })
+        }
     }
 
 
@@ -144,21 +161,70 @@ abstract class Request<T, R> {
         return result
     }
 
-    fun execute() {
+    fun execute(): ApiResponse<T>? {
 
+        if (mType == null) throw RuntimeException("同步方法,response 返回值 类型必须设置")
+
+        if (mCacheStrategy == CACHE_ONLY) {
+            return readCache()
+        }
+
+        if (mCacheStrategy != CACHE_ONLY) {
+            var result: ApiResponse<T>? = null
+            try {
+                val response = getCall().execute()
+                result = parseResponse(response)
+            } catch (e: IOException) {
+                e.printStackTrace()
+                if (result == null) {
+                    result = ApiResponse()
+                    result.message = e.message
+                }
+                return result
+            }
+        }
+        return null
+    }
+
+    /**
+     *  读取缓存
+     */
+    private fun readCache(): ApiResponse<T>? {
+        val key = if (TextUtils.isEmpty(cacheKey)) {
+            generateCacheKey()
+        } else {
+            cacheKey!!
+        }
+
+        val cache = CacheManager.getCache(key)
+        val status = 304
+        val message = "缓存获取成功"
+        val body = cache as T
+        val success = true
+        return  ApiResponse(success,status,message,body)
+    }
+
+
+    /**
+     * 生成缓存的key
+     */
+    private fun generateCacheKey(): String {
+        val key  = UrlCreator.createUrlFromParams(mUrl, params)
+        cacheKey = key
+        return key
     }
 
     fun getCall(): Call {
-        val builder = Request.Builder()
+        val builder = okhttp3.Request.Builder()
         addHeaders(builder)
-        val request: Request = generateRequest(builder)
+        val request: okhttp3.Request = generateRequest(builder)
         val call = ApiService.okHttpClient.newCall(request)
         return call
     }
 
-    abstract fun generateRequest(builder: Request.Builder): Request
+    abstract fun generateRequest(builder: okhttp3.Request.Builder): okhttp3.Request
 
-    private fun addHeaders(builder: Request.Builder) {
+    private fun addHeaders(builder: okhttp3.Request.Builder) {
         for (entry in headers.entries) {
             builder.addHeader(entry.key, entry.value)
         }
@@ -172,4 +238,7 @@ abstract class Request<T, R> {
         return this as R
     }
 
+    override fun clone(): Request<T,R> {
+        return super.clone() as (Request<T,R>)
+    }
 }
