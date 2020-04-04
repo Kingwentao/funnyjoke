@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="user"
             type="User" />
@@ -28,7 +29,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@mipmap/ic_launcher_round"/>
+            tools:src="@mipmap/ic_launcher_round" />
 
         <TextView
             android:id="@+id/author_name"
@@ -43,7 +44,7 @@
             app:layout_constraintBottom_toTopOf="@+id/create_time"
             app:layout_constraintLeft_toRightOf="@+id/avatar"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="use_name"/>
+            tools:text="use_name" />
 
         <TextView
             android:id="@+id/create_time"
@@ -56,7 +57,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/avatar"
             app:layout_constraintTop_toBottomOf="@+id/author_name"
-            tools:text="1小时前"/>
+            tools:text="1小时前" />
 
         <ImageView
             android:id="@+id/feed_delete"
@@ -67,6 +68,6 @@
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -28,7 +28,7 @@ class BindImageView(context: Context, attributeSet: AttributeSet, defStyleAttr: 
         }
         val layoutParams = view.layoutParams
         if (layoutParams != null && layoutParams.width > 0 && layoutParams.height > 0) {
-            builder.override(layoutParams.width,layoutParams.height)
+            builder.override(layoutParams.width, layoutParams.height)
         }
         builder.into(view)
     }
