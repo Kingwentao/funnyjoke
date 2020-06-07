@@ -1,10 +1,11 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.1"
-
 
     defaultConfig {
         minSdkVersion 23
@@ -23,6 +24,9 @@ android {
         }
     }
 
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -33,6 +37,20 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+
+    //兼容包
+    api 'androidx.appcompat:appcompat:1.1.0'
+
+    //navigation导航
+    api 'androidx.navigation:navigation-fragment:2.0.0'
+    api 'androidx.navigation:navigation-ui:2.0.0'
+
+    //约束布局
+    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    //material组件
+    api 'com.google.android.material:material:1.1.0-alpha10'
+
     //图片加载
     api 'com.github.bumptech.glide:glide:4.9.0'
     api 'jp.wasabeef:glide-transformations:4.0.0'
@@ -41,4 +59,27 @@ dependencies {
     //页面刷新组件
     api 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0'
     api 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0'
+
+    //viewpager2 可以禁止预加载
+    api "androidx.viewpager2:viewpager2:1.0.0-beta04"
+
+    //视频播放组件
+    api 'com.google.android.exoplayer:exoplayer-core:2.10.4'
+    api 'com.google.android.exoplayer:exoplayer-dash:2.10.4'
+    api 'com.google.android.exoplayer:exoplayer-ui:2.10.4'
+
+    //fastjson解析
+    api 'com.alibaba:fastjson:1.2.59'
+
+    //包含了 viewmodel 和 livedata
+    api 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+
+    //注解使用生命周期编译器
+    annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.1.0"
+
+    //room数据库
+    api 'android.arch.persistence.room:runtime:1.1.1'
+    api "android.arch.lifecycle:extensions:1.1.1"
+    annotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.1"
 }

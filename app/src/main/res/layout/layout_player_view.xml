@@ -18,6 +18,7 @@
     <!--    真正能够播放展示视频画面的view  会动态的添加到这里-->
 
 
+
     <!--封面-->
     <com.example.funnyjoke.view.BindImageView
         android:id="@+id/cover"
