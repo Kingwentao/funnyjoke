@@ -30,7 +30,7 @@
 
 
         <!--   图片区域-->
-        <com.mooc.ppjoke.view.PPImageView
+        <com.example.funnyjoke.view.BindImageView
             android:id="@+id/feed_image"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

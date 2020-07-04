@@ -2,8 +2,6 @@ package com.example.libcommon.utils
 
 import com.example.libcommon.AppGlobals
 
-
-
 /**
  * author: created by wentaoKing
  * date: created in 2020-04-04
