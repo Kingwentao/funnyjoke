@@ -19,29 +19,30 @@ import com.example.libnetwork.cache.CacheManager
  * date: created in 2020-03-02
  * description:
  */
-abstract class Request<T, R> : Cloneable{
+abstract class Request<T, R> : Cloneable {
 
     private var mType: Type? = null
     private var mUrl: String
     protected val headers = HashMap<String, String>()
     protected val params = HashMap<String, Any>()
-
+    private var mCacheStrategy = NET_ONLY
     private var cacheKey: String? = null
 
     companion object {
         private const val TAG = "Request"
+
         //仅仅只访问本地缓存，即便本地缓存不存在，也不会发起网络请求
         private const val CACHE_ONLY = 1
+
         //先访问缓存，同时发起网络的请求，成功后缓存到本地
         private const val CACHE_FIRST = 2
+
         //仅仅只访问服务器，不存任何存储
         private const val NET_ONLY = 3
+
         //先访问网络，成功后缓存到本地
         private const val NET_CACHE = 4
     }
-
-    private var mCacheStrategy = NET_ONLY
-
 
     constructor(url: String) {
         this.mUrl = url
@@ -58,7 +59,6 @@ abstract class Request<T, R> : Cloneable{
         }
 
         //int byte char short long double float boolean 和他们的包装类型，但是除了 String.class 所以要额外判断
-
         try {
             if (value.javaClass == String::class.java) {
                 params[key] = value
@@ -74,7 +74,6 @@ abstract class Request<T, R> : Cloneable{
         } catch (e: IllegalAccessException) {
             e.printStackTrace()
         }
-
         return this as R
     }
 
@@ -87,17 +86,16 @@ abstract class Request<T, R> : Cloneable{
     fun execute(jsonCallBack: JsonCallBack<T>) {
 
         //加入缓存策略: 如果不只是通过网络
-        if(mCacheStrategy != NET_ONLY){
+        if (mCacheStrategy != NET_ONLY) {
             ArchTaskExecutor.getIOThreadExecutor().execute {
                 val response = readCache()
-                if (jsonCallBack != null && response?.body != null){
+                if (jsonCallBack != null && response?.body != null) {
                     jsonCallBack.onCacheSuccess(response)
                 }
             }
         }
 
-        if (mCacheStrategy != CACHE_ONLY){
-
+        if (mCacheStrategy != CACHE_ONLY) {
             getCall().enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
 
@@ -133,17 +131,20 @@ abstract class Request<T, R> : Cloneable{
             val content = response.body.toString()
             when (success) {
                 true -> {
-
-                    if (callBack != null) {
-                        val parameterizedType =
-                            callBack.javaClass.genericSuperclass as ParameterizedType
-                        val type = parameterizedType.actualTypeArguments[0]
-                        result.body = convert.convert(content, type) as T
-                    } else if (mType != null) {
-                        val type = mType!!
-                        result.body = convert.convert(content, type) as T
-                    } else {
-                        Log.e(TAG, "类型type为空，无法解析 ")
+                    when {
+                        callBack != null -> {
+                            val parameterizedType =
+                                callBack.javaClass.genericSuperclass as ParameterizedType
+                            val type = parameterizedType.actualTypeArguments[0]
+                            result.body = convert.convert(content, type) as T
+                        }
+                        mType != null -> {
+                            val type = mType!!
+                            result.body = convert.convert(content, type) as T
+                        }
+                        else -> {
+                            Log.e(TAG, "类型type为空，无法解析 ")
+                        }
                     }
                 }
                 false -> {
@@ -201,7 +202,7 @@ abstract class Request<T, R> : Cloneable{
         val message = "缓存获取成功"
         val body = cache as T
         val success = true
-        return  ApiResponse(success,status,message,body)
+        return ApiResponse(success, status, message, body)
     }
 
 
@@ -209,7 +210,7 @@ abstract class Request<T, R> : Cloneable{
      * 生成缓存的key
      */
     private fun generateCacheKey(): String {
-        val key  = UrlCreator.createUrlFromParams(mUrl, params)
+        val key = UrlCreator.createUrlFromParams(mUrl, params)
         cacheKey = key
         return key
     }
@@ -221,8 +222,6 @@ abstract class Request<T, R> : Cloneable{
         val call = ApiService.okHttpClient.newCall(request)
         return call
     }
-
-    abstract fun generateRequest(builder: okhttp3.Request.Builder): okhttp3.Request
 
     private fun addHeaders(builder: okhttp3.Request.Builder) {
         for (entry in headers.entries) {
@@ -238,7 +237,9 @@ abstract class Request<T, R> : Cloneable{
         return this as R
     }
 
-    override fun clone(): Request<T,R> {
-        return super.clone() as (Request<T,R>)
+    override fun clone(): Request<T, R> {
+        return super.clone() as (Request<T, R>)
     }
+
+    abstract fun generateRequest(builder: okhttp3.Request.Builder): okhttp3.Request
 }

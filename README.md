@@ -10,3 +10,11 @@ a joke app for you funny everytime,everywhere
 ### 3. Paging
 ### 4. CameraX
 ### 5. WorkManager
+
+### 包结构设计
+
+- app: 业务层
+- libcommon : 公共的基础组件
+- libnetowrk：网络相关的基础组件
+- libnavannotation：页面跳转的基础组件
+- libnavcompiler： 注解相关的基础组件

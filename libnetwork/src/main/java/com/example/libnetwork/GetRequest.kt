@@ -7,7 +7,6 @@ package com.example.libnetwork
  */
 class GetRequest<T>(val url: String) : Request<T, GetRequest<T>>(url) {
 
-
     /**
      * 生成get请求
      */

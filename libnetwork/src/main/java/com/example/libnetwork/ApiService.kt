@@ -16,19 +16,14 @@ import javax.net.ssl.*
  */
 class ApiService {
 
-
     companion object {
-
         private lateinit var sBaseUrl: String
         private const val TAG = "ApiService"
         var okHttpClient: OkHttpClient
-
         lateinit var sConvert: Convert<Any>
 
         init {
-
             val logInterceptor = HttpLoggingInterceptor()
-
             logInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
             okHttpClient = OkHttpClient.Builder()
@@ -37,7 +32,6 @@ class ApiService {
                 .connectTimeout(5, TimeUnit.SECONDS)
                 .addInterceptor(logInterceptor)
                 .build()
-
 
             //http 证书问题
             val trustManagers = arrayOf<TrustManager>(object : X509TrustManager {
@@ -51,7 +45,6 @@ class ApiService {
                 override fun getAcceptedIssuers(): Array<X509Certificate?> {
                     return arrayOfNulls(1)
                 }
-
             })
 
             //ssl
@@ -68,18 +61,15 @@ class ApiService {
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-
         }
 
-        fun init(baseUrl: String,convert: Convert<Any>?=null){
+        fun init(baseUrl: String, convert: Convert<Any>? = null) {
             sBaseUrl = baseUrl
-            if (convert == null){
+            if (convert == null) {
                 sConvert = JsonConvert()
             }
             sConvert = convert!!
         }
-
     }
-
 
 }

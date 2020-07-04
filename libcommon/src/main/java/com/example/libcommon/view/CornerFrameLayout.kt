@@ -12,7 +12,9 @@ import androidx.annotation.Nullable
  * description:
  */
 class CornerFrameLayout @JvmOverloads constructor(
-    @NonNull context: Context, @Nullable attrs: AttributeSet? = null, defStyleAttr: Int = 0,
+    @NonNull context: Context,
+    @Nullable attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
     defStyleRes: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr, defStyleRes) {
 
@@ -23,4 +25,5 @@ class CornerFrameLayout @JvmOverloads constructor(
     fun setViewOutline(radius: Int, radiusSide: Int) {
         ViewHelper.setViewOutline(this, radius, radiusSide)
     }
+
 }

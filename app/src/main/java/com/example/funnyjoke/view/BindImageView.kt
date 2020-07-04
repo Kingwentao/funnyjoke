@@ -71,10 +71,8 @@ class BindImageView(context: Context, attributeSet: AttributeSet, defStyleAttr: 
         setImageUrl(this, imageUrl, false, 0)
     }
 
-    private fun setSize(
-        width: Int, height: Int, marginLeft: Int, marginWidth: Any,
-        maxWidth: Int, maxHeight: Int
-    ) {
+    private fun setSize(width: Int, height: Int, marginLeft: Int, marginWidth: Any,
+        maxWidth: Int, maxHeight: Int) {
 
         val finalWidth: Int
         val finalHeight: Int

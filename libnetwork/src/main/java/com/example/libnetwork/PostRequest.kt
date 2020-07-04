@@ -9,7 +9,6 @@ import okhttp3.FormBody
  */
 class PostRequest<T>(val url: String) : Request<T,PostRequest<T>>(url) {
 
-
     override fun generateRequest(builder: okhttp3.Request.Builder): okhttp3.Request {
 
         val formBuilder = FormBody.Builder()
@@ -19,4 +18,5 @@ class PostRequest<T>(val url: String) : Request<T,PostRequest<T>>(url) {
         val request = builder.url(url).post(formBuilder.build()).build()
         return  request
     }
+
 }

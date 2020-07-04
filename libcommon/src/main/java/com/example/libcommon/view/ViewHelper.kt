@@ -15,14 +15,14 @@ import com.example.libcommon.R
  */
 object ViewHelper {
 
-    val RADIUS_ALL = 0
-    val RADIUS_LEFT = 1
-    val RADIUS_TOP = 2
-    val RADIUS_RIGHT = 3
-    val RADIUS_BOTTOM = 4
+    private const val RADIUS_ALL = 0
+    private const val RADIUS_LEFT = 1
+    private const val RADIUS_TOP = 2
+    private const val RADIUS_RIGHT = 3
+    private const val RADIUS_BOTTOM = 4
 
     fun setViewOutline(view: View, attributes: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) {
-        val array = view.getContext().obtainStyledAttributes(
+        val array = view.context.obtainStyledAttributes(
             attributes,
             R.styleable.viewOutLineStrategy,
             defStyleAttr,
@@ -49,14 +49,19 @@ object ViewHelper {
                     var top = 0
                     var right = w
                     var bottom = h
-                    if (radiusSide == RADIUS_LEFT) {
-                        right += radius
-                    } else if (radiusSide == RADIUS_TOP) {
-                        bottom += radius
-                    } else if (radiusSide == RADIUS_RIGHT) {
-                        left -= radius
-                    } else if (radiusSide == RADIUS_BOTTOM) {
-                        top -= radius
+                    when (radiusSide) {
+                        RADIUS_LEFT -> {
+                            right += radius
+                        }
+                        RADIUS_TOP -> {
+                            bottom += radius
+                        }
+                        RADIUS_RIGHT -> {
+                            left -= radius
+                        }
+                        RADIUS_BOTTOM -> {
+                            top -= radius
+                        }
                     }
                     outline.setRoundRect(left, top, right, bottom, radius.toFloat())
                     return
@@ -71,7 +76,7 @@ object ViewHelper {
                 }
             }
         }
-        owner.setClipToOutline(radius > 0)
+        owner.clipToOutline = radius > 0
         owner.invalidate()
     }
 }
