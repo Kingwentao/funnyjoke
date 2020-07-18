@@ -11,7 +11,6 @@ import java.lang.Exception
 class CacheManager {
 
     companion object {
-
         //反序列,把二进制数据转换成java object对象
         fun toObject(date: ByteArray): Any? {
             var bais: ByteArrayInputStream? = null
@@ -28,7 +27,6 @@ class CacheManager {
             }
             return null
         }
-
 
         //序列化存储数据:需要转换成二进制
         fun <T> toByteArray(body: T): ByteArray {

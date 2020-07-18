@@ -18,3 +18,15 @@ a joke app for you funny everytime,everywhere
 - libnetowrk：网络相关的基础组件
 - libnavannotation：页面跳转的基础组件
 - libnavcompiler： 注解相关的基础组件
+
+
+#### libcommon
+
+- util：常用的工具类
+- view: 公用的view类
+- AppGlobals: 全局的应用
+
+#### libnetowrk
+
+- cache： 可对网络请求的数据缓存到数据库
+....: 网络请求需要的

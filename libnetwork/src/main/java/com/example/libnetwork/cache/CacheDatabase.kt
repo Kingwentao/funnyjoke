@@ -17,11 +17,9 @@ import com.example.libcommon.AppGlobals
 abstract class CacheDatabase : RoomDatabase() {
 
     companion object {
-
         private val mDataBase: CacheDatabase
 
         init {
-
             //添加升级的版本
             val sMigration = object : Migration(1, 3) {
                 override fun migrate(database: SupportSQLiteDatabase) {
@@ -41,8 +39,8 @@ abstract class CacheDatabase : RoomDatabase() {
                 //   .setJournalMode()  //room的日志模式
                 .addMigrations(sMigration)
                 .build()
-
         }
+
         fun get(): CacheDatabase {
             return mDataBase
         }
@@ -50,7 +48,4 @@ abstract class CacheDatabase : RoomDatabase() {
     }
 
     abstract fun getCache(): CacheDao
-
-
-
 }

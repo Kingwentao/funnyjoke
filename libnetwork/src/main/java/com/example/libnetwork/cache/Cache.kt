@@ -35,8 +35,6 @@ import androidx.room.*
         )]*/
 )
 data class Cache(
-
-
     @PrimaryKey
     val key: String,
 
