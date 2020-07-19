@@ -31,6 +31,11 @@ class Feed : BaseObservable(), Serializable {
      * cover :
      */
 
+    companion object {
+        const val TYPE_IMAGE_TEXT = 1//图文
+        const val TYPE_VIDEO = 2//视频
+    }
+
     var id: Int = 0
     var itemId: Long = 0
     var itemType: Int = 0
@@ -42,8 +47,8 @@ class Feed : BaseObservable(), Serializable {
     var activityText: String? = null
     var width: Int = 0
     var height: Int = 0
-    var url: String? = null
-    var cover: String? = null
+    var url: String = ""
+    var cover: String = ""
 
     @get:Bindable
     var author: User? = null
@@ -97,12 +102,5 @@ class Feed : BaseObservable(), Serializable {
         result = 31 * result + (ugC?.hashCode() ?: 0)
         return result
     }
-
-    companion object {
-
-        val TYPE_IMAGE_TEXT = 1//图文
-        val TYPE_VIDEO = 2//视频
-    }
-
 
 }
