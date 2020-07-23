@@ -2,7 +2,6 @@ package com.example.libnetwork
 
 import com.alibaba.fastjson.JSON
 import java.lang.reflect.Type
-import java.util.*
 
 /**
  * author: created by wentaoKing
@@ -13,10 +12,10 @@ class JsonConvert<T> : Convert<T> {
 
     override fun convert(response: String, type: Type): T? {
         val jSONObject = JSON.parseObject(response)
-        val data = jSONObject.getJSONObject("data")
-        if (data != null) {
-            val data1 = data.get("data")
-            return JSON.parseObject(data1.toString(), type)
+        val dataJsonObject = jSONObject.getJSONObject("data")
+        if (dataJsonObject != null) {
+            val data = dataJsonObject["data"]
+            return JSON.parseObject(data.toString(), type)
         }
         return null
     }

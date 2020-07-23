@@ -49,5 +49,4 @@ class HomeFragment : AbsListFragment<Feed>() {
 
     }
 
-    ov
 }

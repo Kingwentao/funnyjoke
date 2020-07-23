@@ -8,7 +8,7 @@ package com.example.libnetwork
 class GetRequest<T>(val url: String) : Request<T, GetRequest<T>>(url) {
 
     /**
-     * 生成get请求
+     * 生成get请求的Request
      */
     override fun generateRequest(builder: okhttp3.Request.Builder): okhttp3.Request {
         return builder.get().url(UrlCreator.createUrlFromParams(url, params)).build()

@@ -10,15 +10,15 @@ import java.util.*
  */
 class DateConvert {
 
-    companion object{
+    companion object {
 
         @TypeConverter
-        fun date2Long(date: Date): Long{
+        fun date2Long(date: Date): Long {
             return date.time
         }
 
         @TypeConverter
-        fun long2Date(date: Long): Date{
+        fun long2Date(date: Long): Date {
             return Date(date)
         }
     }

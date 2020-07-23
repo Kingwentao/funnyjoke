@@ -10,7 +10,6 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.funnyjoke.utils.NavGraphBuilder
@@ -53,8 +52,8 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         request.execute(object : JsonCallBack<JSONObject>() {
 
-            override fun onSuccess(respone: ApiResponse<JSONObject>) {
-                super.onSuccess(respone)
+            override fun onSuccess(response: ApiResponse<JSONObject>) {
+                super.onSuccess(response)
             }
         })
 

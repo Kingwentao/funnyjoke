@@ -76,22 +76,16 @@ class FeedAdapter : PagedListAdapter<Feed, FeedAdapter.ViewHolder> {
                 is LayoutFeedTypeImageBinding -> {
                     mBinding.feed = item
                     mBinding.feedImage.bindData(
-                        item.width, item.height, 16,
-                        16, imageUrl = item.cover
-                    )
-
+                        item.width, item.height, 16, 16, imageUrl = item.cover)
                 }
                 is LayoutFeedTypeVideoBinding -> {
                     mBinding.feed = item
                     mBinding.listPlayerView.bindData(
-                        mCategory,
-                        item.width, item.height, item.cover, item.url
-                    )
+                        mCategory, item.width, item.height, item.cover, item.url)
                 }
                 else -> {
                     throw Exception("bind type is not exist!")
                 }
-
             }
 
         }

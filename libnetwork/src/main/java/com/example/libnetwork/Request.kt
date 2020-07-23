@@ -17,7 +17,7 @@ import com.example.libnetwork.cache.CacheManager
 /**
  * author: created by wentaoKing
  * date: created in 2020-03-02
- * description:
+ * description: 请求的抽象层：请求共有的逻辑
  */
 abstract class Request<T, R> : Cloneable {
 
@@ -58,7 +58,8 @@ abstract class Request<T, R> : Cloneable {
             return this as R
         }
 
-        //int byte char short long double float boolean 和他们的包装类型，但是除了 String.class 所以要额外判断
+        //int byte char short long double float boolean 和他们的包装类型，
+        // 但是除了 String.class 所以要额外判断
         try {
             if (value.javaClass == String::class.java) {
                 params[key] = value
@@ -89,7 +90,7 @@ abstract class Request<T, R> : Cloneable {
         if (mCacheStrategy != NET_ONLY) {
             ArchTaskExecutor.getIOThreadExecutor().execute {
                 val response = readCache()
-                if (jsonCallBack != null && response?.body != null) {
+                if (response?.body != null) {
                     jsonCallBack.onCacheSuccess(response)
                 }
             }
@@ -98,7 +99,6 @@ abstract class Request<T, R> : Cloneable {
         if (mCacheStrategy != CACHE_ONLY) {
             getCall().enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-
                     val response = ApiResponse<T>()
                     response.message = e.message
                     jsonCallBack.onError(response)
@@ -106,7 +106,6 @@ abstract class Request<T, R> : Cloneable {
 
                 override fun onResponse(call: Call, response: Response) {
                     val apiResponse: ApiResponse<T> = parseResponse(response, jsonCallBack)
-
                     if (apiResponse.success!!) {
                         jsonCallBack.onSuccess(apiResponse)
                     } else {
@@ -117,11 +116,17 @@ abstract class Request<T, R> : Cloneable {
         }
     }
 
-
+    /**
+     * 解析
+     * @param response Response
+     * @param callBack JsonCallBack<T>?
+     * @return ApiResponse<T>
+     */
     private fun parseResponse(
         response: Response,
         callBack: JsonCallBack<T>? = null
     ): ApiResponse<T> {
+
         var message: String? = null
         val status = response.code
         var success = response.isSuccessful
@@ -241,5 +246,6 @@ abstract class Request<T, R> : Cloneable {
         return super.clone() as (Request<T, R>)
     }
 
+    //生成请求Request对象
     abstract fun generateRequest(builder: okhttp3.Request.Builder): okhttp3.Request
 }
