@@ -14,14 +14,11 @@ import com.example.libnavnoattion.FragmentDestination
 @FragmentDestination(pageUrl = "main/tabs/sofa",asStarter = false)
 class SofaFragment : Fragment() {
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.fragment_notifications, container, false)
         val textView: TextView = root.findViewById(R.id.text_notifications)
         return root
     }
+
 }

@@ -11,7 +11,7 @@ import java.io.Serializable
  * description:
  */
 
-class Comment : BaseObservable(),Serializable {
+class Comment : BaseObservable(), Serializable {
     /**
      * id : 784
      * itemId : 6739143063064549000
@@ -30,6 +30,11 @@ class Comment : BaseObservable(),Serializable {
      * author : {"id":978,"userId":65200808093,"name":"带鱼裹上面包糠","avatar":"","description":null,"likeCount":0,"topCommentCount":0,"followCount":0,"followerCount":0,"qqOpenId":null,"expires_time":0,"score":0,"historyCount":0,"commentCount":0,"favoriteCount":0,"feedCount":0,"hasFollow":false}
      * ugc2 : {"likeCount":153,"shareCount":0,"commentCount":4454,"hasFavorite":false,"hasLiked":true}
      */
+
+    companion object {
+        val COMMENT_TYPE_VIDEO = 3
+        val COMMENT_TYPE_IMAGE_TEXT = 2
+    }
 
     var id: Int = 0
     var itemId: Long = 0
@@ -66,8 +71,4 @@ class Comment : BaseObservable(),Serializable {
         return ugc2!!
     }
 
-    companion object {
-        val COMMENT_TYPE_VIDEO = 3
-        val COMMENT_TYPE_IMAGE_TEXT = 2
-    }
 }

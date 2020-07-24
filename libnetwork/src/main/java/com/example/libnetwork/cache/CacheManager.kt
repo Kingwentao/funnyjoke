@@ -12,7 +12,7 @@ class CacheManager {
 
     companion object {
         /**
-         *  反序列,把二进制数据转换成java object对象
+         *  反序列,把二进制数据转换成object对象
          */
         fun toObject(date: ByteArray): Any? {
             var bais: ByteArrayInputStream? = null
@@ -54,7 +54,6 @@ class CacheManager {
             val data = toByteArray(body)
             val cache = Cache(key, data)
             CacheDatabase.get().getCache().delete(cache)
-
         }
 
         fun <T> save(key: String, body: T) {

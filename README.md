@@ -1,15 +1,15 @@
 # funnyjoke
 a joke app for you funny everytime,everywhere
 
-目标：使用JetPack和Kotlin，实现一个让你无时无刻享受它给你带来快乐的app
+目标：使用JetPack + Kotlin，实现一个让你无时无刻享受它给你带来快乐的app
 
-使用技术 ： JetPack + Kotlin
+使用到的JetPack组件：
 
-### 1. Navigation
-### 2. Room
-### 3. Paging
-### 4. CameraX
-### 5. WorkManager
+1. Navigation
+2. Room
+3. Paging
+4. CameraX
+5. WorkManager
 
 ### 包结构设计
 
@@ -23,10 +23,13 @@ a joke app for you funny everytime,everywhere
 #### libcommon
 
 - util：常用的工具类
-- view: 公用的view类
+- view: 共用的view类
 - AppGlobals: 全局的应用
 
 #### libnetowrk
 
 - cache： 可对网络请求的数据缓存到数据库
-....: 网络请求需要的
+- 其他: 可共用相关的网络请求相关的类
+
+### Navigation
+

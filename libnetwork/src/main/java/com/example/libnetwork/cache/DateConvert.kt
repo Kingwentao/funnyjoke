@@ -6,7 +6,7 @@ import java.util.*
 /**
  * author: created by wentaoKing
  * date: created in 2020-03-24
- * description: 数据类型转化
+ * description: 日期转化
  */
 class DateConvert {
 
