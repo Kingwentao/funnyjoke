@@ -1,17 +1,16 @@
 package com.example.libnetwork
 
 import android.annotation.SuppressLint
+import android.text.TextUtils
 import android.util.Log
+import androidx.arch.core.executor.ArchTaskExecutor
+import com.example.libnetwork.cache.CacheManager
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
 import java.io.IOException
-import java.lang.Exception
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
-import android.text.TextUtils
-import androidx.arch.core.executor.ArchTaskExecutor
-import com.example.libnetwork.cache.CacheManager
 
 
 /**
@@ -32,16 +31,16 @@ abstract class Request<T, R> : Cloneable {
         private const val TAG = "Request"
 
         //仅仅只访问本地缓存，即便本地缓存不存在，也不会发起网络请求
-        private const val CACHE_ONLY = 1
+        const val CACHE_ONLY = 1
 
         //先访问缓存，同时发起网络的请求，成功后缓存到本地
-        private const val CACHE_FIRST = 2
+         const val CACHE_FIRST = 2
 
         //仅仅只访问服务器，不存任何存储
-        private const val NET_ONLY = 3
+        const val NET_ONLY = 3
 
         //先访问网络，成功后缓存到本地
-        private const val NET_CACHE = 4
+        const val NET_CACHE = 4
     }
 
     constructor(url: String) {
@@ -242,7 +241,7 @@ abstract class Request<T, R> : Cloneable {
         return this as R
     }
 
-    override fun clone(): Request<T, R> {
+    public override fun clone(): Request<T, R> {
         return super.clone() as (Request<T, R>)
     }
 

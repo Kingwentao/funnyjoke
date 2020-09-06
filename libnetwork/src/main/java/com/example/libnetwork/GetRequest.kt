@@ -5,7 +5,7 @@ package com.example.libnetwork
  * date: created in 2020-03-02
  * description: get 请求
  */
-class GetRequest<T>(val url: String) : Request<T, GetRequest<T>>(url) {
+class GetRequest<T>(private val url: String) : Request<T, GetRequest<T>>(url) {
 
     /**
      * 生成get请求的Request

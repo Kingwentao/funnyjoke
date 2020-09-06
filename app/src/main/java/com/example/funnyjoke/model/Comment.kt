@@ -8,7 +8,7 @@ import java.io.Serializable
 /**
  * author: created by wentaoKing
  * date: created in 2020-04-21
- * description:
+ * description: 评论数据
  */
 
 class Comment : BaseObservable(), Serializable {

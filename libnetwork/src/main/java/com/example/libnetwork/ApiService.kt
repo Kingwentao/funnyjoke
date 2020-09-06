@@ -3,11 +3,13 @@ package com.example.libnetwork
 import android.util.Log
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import java.lang.Exception
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.*
+import javax.net.ssl.HttpsURLConnection
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
 
 /**
  * author: created by wentaoKing
@@ -70,6 +72,15 @@ class ApiService {
             }
             sConvert = convert!!
         }
+
+         fun <T> get(url: String): GetRequest<T> {
+            return GetRequest(sBaseUrl + url)
+        }
+
+        fun <T> post(url: String): PostRequest<T> {
+            return PostRequest(sBaseUrl + url)
+        }
+
     }
 
 }
