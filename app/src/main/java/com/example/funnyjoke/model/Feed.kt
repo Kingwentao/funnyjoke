@@ -4,7 +4,6 @@ import android.text.TextUtils
 import androidx.annotation.Nullable
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
-import org.w3c.dom.Comment
 import java.io.Serializable
 
 

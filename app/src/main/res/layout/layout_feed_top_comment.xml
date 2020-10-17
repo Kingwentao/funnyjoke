@@ -78,7 +78,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@{comment.ugc.likeCount>0?StringConvert.convertFeedUgc(comment.ugc.likeCount):null}"
                     android:textColor="@{comment.ugc.hasLiked?@color/color_theme:@color/color_3d3}"
                     android:textSize="@dimen/sp_12"
                     tools:text="1000" />
@@ -87,7 +86,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dp_2"
-                    android:onClick="@{()->InteractionPresenter.toggleCommentLike(lifeCycleOwner,comment)}"
                     android:src="@{comment.ugc.hasLiked?@drawable/icon_cell_liked:@drawable/icon_cell_like}"
                     tools:src="@drawable/icon_cell_liked">
 

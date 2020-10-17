@@ -79,6 +79,7 @@ public class NavProcessor extends AbstractProcessor {
             //获取app目录的路径
             String appPath = resourcePath.substring(0, resourcePath.indexOf("app") + 4);
             String assetPath = appPath + "src/main/assets/";
+            //将内容写入到生成的文件中
             writeToFile(assetPath, destMap);
         }
         return true;
