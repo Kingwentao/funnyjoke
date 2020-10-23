@@ -18,7 +18,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout
 
 
 @FragmentDestination(pageUrl = "main/tabs/home",asStarter = true)
-class HomeFragment : AbsListFragment<Feed>() {
+class HomeFragment : Fragment() {
 
     private lateinit var homeViewModel: HomeViewModel
 
@@ -35,18 +35,6 @@ class HomeFragment : AbsListFragment<Feed>() {
             textView.text = it
         })
         return root
-    }
-
-    override fun getAdapter(): PagedListAdapter<Feed, RecyclerView.ViewHolder> {
-        //TODO
-    }
-
-    override fun onLoadMore(refreshLayout: RefreshLayout) {
-
-    }
-
-    override fun onRefresh(refreshLayout: RefreshLayout) {
-
     }
 
 }

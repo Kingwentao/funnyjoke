@@ -5,13 +5,8 @@ import android.text.TextUtils
 import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.NavActionBuilder
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import com.example.funnyjoke.utils.NavGraphBuilder
 import com.example.libnetwork.ApiResponse
 import com.example.libnetwork.GetRequest
@@ -29,33 +24,32 @@ class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
-            )
-        )
+//        val appBarConfiguration = AppBarConfiguration(
+//            setOf(
+//                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+//            )
+//        )
 
         val fragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)!!
 
         navController = NavHostFragment.findNavController(fragment)
         NavGraphBuilder.build(navController, this, fragment.id)
 
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        nav_view.setupWithNavController(navController)
+//        setupActionBarWithNavController(navController, appBarConfiguration)
+//        nav_view.setupWithNavController(navController)
         //设置导航栏的选择监听
         nav_view.setOnNavigationItemSelectedListener(this)
 
 
         //测试
         val request = GetRequest<JSONObject>("www.mooc.com")
-        request.execute()
-
-        request.execute(object : JsonCallBack<JSONObject>() {
-
-            override fun onSuccess(response: ApiResponse<JSONObject>) {
-                super.onSuccess(response)
-            }
-        })
+        //request.execute()
+//        request.execute(object : JsonCallBack<JSONObject>() {
+//
+//            override fun onSuccess(response: ApiResponse<JSONObject>) {
+//                super.onSuccess(response)
+//            }
+//        })
 
     }
 

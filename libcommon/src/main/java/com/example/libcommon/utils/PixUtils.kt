@@ -12,7 +12,7 @@ class PixUtils {
     companion object{
         fun dp2px(dpValue: Int): Int {
             val metrics = AppGlobals.getApplication().resources.displayMetrics
-            return (metrics.density * dpValue + 0.5f) as Int
+            return (metrics.density * dpValue + 0.5f).toInt()
         }
 
         fun getScreenWidth(): Int {

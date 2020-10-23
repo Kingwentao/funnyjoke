@@ -3,6 +3,7 @@ package com.example.funnyjoke.ui.home
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.paging.DataSource
 import androidx.paging.ItemKeyedDataSource
 import com.alibaba.fastjson.TypeReference
@@ -12,7 +13,7 @@ import com.example.libnetwork.ApiResponse
 import com.example.libnetwork.ApiService
 import java.util.*
 
-class HomeViewModel : AbsViewModel<Feed>() {
+class HomeViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"
@@ -23,9 +24,7 @@ class HomeViewModel : AbsViewModel<Feed>() {
     @Volatile
     private var witchCache = true
 
-    override fun createDataSource(): DataSource{
-        return FeedDataSource()
-    }
+
 
     inner class FeedDataSource: ItemKeyedDataSource<Int,Feed>(){
         override fun loadInitial(
@@ -75,9 +74,9 @@ class HomeViewModel : AbsViewModel<Feed>() {
                 callback.onResult(data.toMutableList())
             }
 
-            if (key > 0) {
+            if (key > 0 && data!= null) {
                 //通过BoundaryPageData发送数据 告诉UI层 是否应该主动关闭上拉加载分页的动画
-                (getBoundaryPageData() as MutableLiveData<*>).postValue(data.size > 0)
+             //   (getBoundaryPageData() as MutableLiveData<*>).postValue(data.isNotEmpty())
 
             }
         } catch (e: CloneNotSupportedException) {
