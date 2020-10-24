@@ -33,7 +33,6 @@ class NavGraphBuilder {
                     fgDestination.className = destination.className
                     fgDestination.id = destination.id
                     fgDestination.addDeepLink(destination.pageUrl)
-
                     navGraph.addDestination(fgDestination)
                 }else{
                     val atDestination = activityNavigator.createDestination()
@@ -44,7 +43,7 @@ class NavGraphBuilder {
                     atDestination.addDeepLink(destination.pageUrl)
                     navGraph.addDestination(atDestination)
                 }
-
+                //设置页面启动页：将启动页的id进行关联
                 if (destination.asStarter){
                     navGraph.startDestination = destination.id
                 }

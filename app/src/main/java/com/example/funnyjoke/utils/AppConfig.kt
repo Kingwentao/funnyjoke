@@ -18,30 +18,27 @@ import java.lang.StringBuilder
 class AppConfig {
 
     companion object {
-
         private const val TAG = "AppConfig"
 
-        //由于全局存在，所以可以定义成静态
+        //由于全局存在，不会被销毁，所以可定义成静态
         private var sDestConfig: HashMap<String, Destination>? = null
-        private var sButtonBar: BottomBar ?= null
+        private var sButtonBar: BottomBar? = null
 
         fun getDestConfig(): HashMap<String, Destination> {
-
             if (sDestConfig == null) {
                 val content = parseFile("destination.json")
                 sDestConfig =
                     JSON.parseObject(content,
-                        object : TypeReference<HashMap<String, Destination>>() {}.type)
+                        object : TypeReference<HashMap<String, Destination>>() {}.type
+                    )
             }
             return sDestConfig!!
         }
 
-
-        fun getBottomBar(): BottomBar{
-
-            if (sButtonBar == null){
+        fun getBottomBar(): BottomBar {
+            if (sButtonBar == null) {
                 val content = parseFile("tabs_config.json")
-                sButtonBar = JSON.parseObject(content,BottomBar::class.java)
+                sButtonBar = JSON.parseObject(content, BottomBar::class.java)
             }
             return sButtonBar!!
         }

@@ -11,9 +11,7 @@ import java.lang.reflect.InvocationTargetException
  * date: created in 2020-01-15
  * description: 应用全局信息
  */
-class AppGlobals {
-
-    companion object {
+object AppGlobals {
 
         private const val TAG = "AppGlobals"
         private var sApplication: Application? = null
@@ -21,7 +19,7 @@ class AppGlobals {
         @SuppressLint("PrivateApi", "DiscouragedPrivateApi")
         fun getApplication(): Application {
             if (sApplication == null) {
-                //通过反射获取application对象
+                //通过反射`currentApplication`方法获取application对象
                 try {
                     val method = Class.forName("android.app.ActivityThread")
                         .getDeclaredMethod("currentApplication")
@@ -41,5 +39,5 @@ class AppGlobals {
             }
             return sApplication!!
         }
-    }
+
 }

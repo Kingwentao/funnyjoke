@@ -17,7 +17,7 @@ import com.google.android.material.bottomnavigation.*
  * date: created in 2020-01-18
  * description: 自定义底部导航栏view
  */
-class BottomBarView : BottomNavigationView {
+class BottomNavigationBarView : BottomNavigationView {
 
     private val sIcons = arrayOf(
         R.drawable.icon_tab_home, R.drawable.icon_tab_sofa,
@@ -60,22 +60,22 @@ class BottomBarView : BottomNavigationView {
         for (tab in tabs) {
             if (tab.enable) {
                 val id = getTabId(tab.pageUrl)
-                Log.d("tempTest", "id + $id")
                 if (id > 0) {
                     //获取菜单item
                     val menuItem = menu.add(0, id, tab.index, tab.title)
                     //设置菜单按钮的图标
                     menuItem.setIcon(sIcons[tab.index])
+                } else {
+                    Log.e("BottomBarView", " ${tab.title} icon id is error!!!")
                 }
             }
         }
 
-        //给菜单栏的按钮设置大小
+        //给菜单栏的按钮设置大小、重新着色
         for (tab in tabs) {
             val menuView = getChildAt(0) as BottomNavigationMenuView
             val itemView = menuView.getChildAt(tab.index) as BottomNavigationItemView
             val iconSize = PixUtils.dp2px(tab.size)
-
             itemView.setIconSize(iconSize)
             if (TextUtils.isEmpty(tab.title)) {
                 itemView.setIconTintList(ColorStateList.valueOf(Color.parseColor(tab.tintColor)))
@@ -86,13 +86,7 @@ class BottomBarView : BottomNavigationView {
 
     private fun getTabId(pageUrl: String): Int {
         val destination = AppConfig.getDestConfig()[pageUrl]
-        if (destination == null) {
-            return -1
-        } else {
-            return destination.id
-        }
-
+        return destination?.id ?: -1
     }
-
 
 }
